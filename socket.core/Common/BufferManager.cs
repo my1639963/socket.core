@@ -9,7 +9,7 @@ namespace socket.core.Common
     /// <summary>
     /// 缓存管理类
     /// </summary>
-    internal class BufferManager
+    public class BufferManager
     {
         /// <summary>
         /// 缓冲池控制的总字节数
@@ -37,7 +37,7 @@ namespace socket.core.Common
         /// </summary>
         /// <param name="totalBytes">缓存区总大小</param>
         /// <param name="bufferSize">缓存大小</param>
-        internal BufferManager(int totalBytes, int bufferSize)
+        public BufferManager(int totalBytes, int bufferSize)
         {
             m_numBytes = totalBytes;
             m_currentIndex = 0;

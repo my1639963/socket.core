@@ -15,10 +15,9 @@ namespace socket.core.Common
         /// 获取本地网络信息
         /// </summary>
         /// <returns>item1:ip地址,item2:子网掩码,item3:默认网关,item4:广播地址</returns>
-        public static List<Tuple<string, string, string, string>> GetNetwork()
+        public static List<(string, string, string, string)> GetNetwork()
         {
-            Tuple<string, string, string, string> aa = new Tuple<string, string, string, string>("", "", "", "");
-            List<Tuple<string, string, string, string>> netscript = new List<Tuple<string, string, string, string>>();
+            List<(string, string, string, string)> netscript = new List<(string, string, string, string)>();
             NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface netWork in nics)
             {
@@ -37,11 +36,12 @@ namespace socket.core.Common
                             //广播地址=子网掩码按位求反 再 或IP地址 
                             broadcast[i] = (byte)((~item.IPv4Mask.GetAddressBytes()[i]) | item.Address.GetAddressBytes()[i]);
                         }
-                        netscript.Add(new Tuple<string, string, string, string>
-                            (item.Address.ToString(),
+                        netscript.Add((
+                            item.Address.ToString(),
                             item.IPv4Mask.ToString(),
                             myip.GatewayAddresses[0].Address.ToString(),
-                            new IPAddress(broadcast).ToString()));
+                            new IPAddress(broadcast).ToString()
+                            ));
                     }
                 }
             }

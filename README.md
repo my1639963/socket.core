@@ -1,6 +1,7 @@
 ﻿socket.core
 ===
-This is a socket framework based on C # net standard2.0 write, can be used for .NET Framework / dotnet core assembly, can run in window (IOCP) / linux (epoll) .Use asynchronous connection, asynchronous send, asynchronous receive, Performance burst tables, and pass the stress test.  
+This is a socket framework based on C # net standard2.0 write, can be used for .NET Framework / dotnet core assembly, can run in window (IOCP) / linux (epoll) .Use asynchronous connection, asynchronous send, asynchronous receive, Performance burst tables, and pass the stress test.    
+.NET Framework4.0 version   https://github.com/fengma312/socket.framework   
 ---
 
 下面有中文文档     

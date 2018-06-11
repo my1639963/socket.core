@@ -60,7 +60,7 @@ namespace socket.core.Server
         /// </summary>
         private int sendthread = 10;
         /// <summary>
-        /// 需要发送的数据
+        /// 需要发送的数据,每一个线程一个队列
         /// </summary>
         private ConcurrentQueue<SendingQueue>[] sendQueues;
         /// <summary>

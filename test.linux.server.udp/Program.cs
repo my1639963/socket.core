@@ -10,7 +10,7 @@ namespace test.linux.server.udp
         static void Main(string[] args)
         {
             udpServer = new UdpServer(1024);
-            udpServer.Start(6666);
+            udpServer.Start(6666, true);
             udpServer.OnReceive += UdpServer_OnReceive;
 
             udpServer.OnSend += UdpServer_OnSend;

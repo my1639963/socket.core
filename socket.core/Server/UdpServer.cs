@@ -99,11 +99,15 @@ namespace socket.core.Server
         /// 启动udp服务侦听
         /// </summary>       
         /// <param name="port">绑定端口</param>
-        public void Start(int port)
+        /// <param name="reuseAddress">重复地址</param>
+        public void Start(int port, bool reuseAddress = false)
         {
             IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, port);
             //创建listens是传入的套接字。
             listenSocket = new Socket(localEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
+            listenSocket.ExclusiveAddressUse = !reuseAddress;
+            listenSocket.SetSocketOption(
+                SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, reuseAddress);
             //绑定端口           
             listenSocket.Bind(localEndPoint);
             byte[] receivebuffer = new byte[m_receiveBufferSize];

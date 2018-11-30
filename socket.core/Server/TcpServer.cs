@@ -491,6 +491,7 @@ namespace socket.core.Server
                 }
                 if (client.socket.Connected == false)
                 {
+                    connectClient.TryRemove((int)e.UserToken, out client);
                     return;
                 }
                 try

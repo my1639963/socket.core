@@ -61,6 +61,8 @@ Server other methods introduced
 > The server sets additional data for each client to prevent the user from establishing the user mapping table   
 * 2.  T GetAttached<T>(int connectId)    
 > Get additional data for the specified client   
+* 3. Attributes:ConcurrentDictionary<int, string> ClientList
+>Get the client information being connected <connectId, ip and port>
 
 Two: UDP module introduction  
   
@@ -143,6 +145,8 @@ Paket CLI:paket add socket.core
 	>服务端为每个客户端设置附加数据，避免用户自己再建立用户映射表   
 * 2. T GetAttached<T>(int connectId)   
 	>获取指定客户端的附加数据
+* 3. 属性:ConcurrentDictionary<int, string> ClientList
+	>获取正在连接的客户端信息<connectId,ip和端口>
 
 
 二：UDP模块介绍    

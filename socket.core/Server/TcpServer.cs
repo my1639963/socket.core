@@ -85,6 +85,10 @@ namespace socket.core.Server
         /// </summary>
         internal ConcurrentDictionary<int, ConnectClient> connectClient;
         /// <summary>
+        /// 客户端列表
+        /// </summary>
+        internal ConcurrentDictionary<int, string> clientList;
+        /// <summary>
         /// 发送线程数
         /// </summary>
         private int sendthread = 10;
@@ -137,6 +141,7 @@ namespace socket.core.Server
         private void Init()
         {
             connectClient = new ConcurrentDictionary<int, ConnectClient>();
+            clientList = new ConcurrentDictionary<int, string>();
             sendQueues = new ConcurrentQueue<SendingQueue>[sendthread];
             for (int i = 0; i < sendthread; i++)
             {
@@ -266,6 +271,7 @@ namespace socket.core.Server
             connecttoken.saea_receive.UserToken = connectId;
             connecttoken.saea_receive.AcceptSocket = e.AcceptSocket;
             connectClient.TryAdd(connectId, connecttoken);
+            clientList.TryAdd(connectId, e.AcceptSocket.RemoteEndPoint.ToString());
             //一旦客户机连接，就准备接收。
             if (!e.AcceptSocket.ReceiveAsync(connecttoken.saea_receive))
             {
@@ -485,13 +491,15 @@ namespace socket.core.Server
             {
                 int connectId = (int)e.UserToken;
                 ConnectClient client;
+                string clientip;
                 if (!connectClient.TryGetValue(connectId, out client))
                 {
                     return;
                 }
                 if (client.socket.Connected == false)
                 {
-                    connectClient.TryRemove((int)e.UserToken, out client);
+                    connectClient.TryRemove(connectId, out client);
+                    clientList.TryRemove(connectId, out clientip);
                     return;
                 }
                 try
@@ -507,7 +515,8 @@ namespace socket.core.Server
                 {
                     OnClose(connectId);
                 }
-                connectClient.TryRemove((int)e.UserToken, out client);
+                connectClient.TryRemove(connectId, out client);
+                clientList.TryRemove(connectId, out clientip);
                 client = null;
             }
         }

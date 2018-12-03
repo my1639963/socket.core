@@ -34,6 +34,23 @@ namespace socket.core.Server
         /// 断开连接通知事件 item1:connectId,
         /// </summary>
         public event Action<int> OnClose;
+        /// <summary>
+        /// 客户端列表
+        /// </summary>
+        public ConcurrentDictionary<int, string> ClientList
+        {
+            get
+            {
+                if(tcpServer!=null)
+                {
+                    return tcpServer.clientList;
+                }
+                else
+                {
+                    return new ConcurrentDictionary<int, string>();
+                }                
+            }
+        }
 
         /// <summary>
         /// 设置基本配置

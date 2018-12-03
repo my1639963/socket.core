@@ -41,6 +41,23 @@ namespace socket.core.Server
         /// 包头标记
         /// </summary>
         private uint headerFlag;
+        /// <summary>
+        /// 客户端列表
+        /// </summary>
+        public ConcurrentDictionary<int, string> ClientList
+        {
+            get
+            {
+                if (tcpServer != null)
+                {
+                    return tcpServer.clientList;
+                }
+                else
+                {
+                    return new ConcurrentDictionary<int, string>();
+                }
+            }
+        }
 
         /// <summary>
         /// 设置基本配置

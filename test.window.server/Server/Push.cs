@@ -1,6 +1,7 @@
 ﻿
 using socket.core.Server;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,8 +35,8 @@ namespace test.window.server.Server
         {
             //server.SetAttached(obj, 555);
             //Console.WriteLine($"Push已连接{obj}");
+            //ConcurrentDictionary<int, string> aa= server.ClientList;
 
-            
             //Thread thread = new Thread(new ThreadStart(() =>
             //{
             //    byte[] arg2 = Encoding.UTF8.GetBytes("fdsafdsafdsafdsafdasfdsafffdsafdsafdsafdsafdasfdsaffdsafdsafdsafdsafdasfdsaffdsafaaadsafdsafdsafdasfdsaffdsafdsafdsafdsafdasfdsafdsafdsafdsafdsafdasfdsaffdsafdsafdsafdsafdasfdsaffdsafdsafdsafdsafdasfdsaf");
@@ -58,6 +59,7 @@ namespace test.window.server.Server
 
         private void Server_OnReceive(int arg1, byte[] arg2)
         {
+            //ConcurrentDictionary<int, string> aa = server.ClientList;
             //int aaa=server.GetAttached<int>(arg1);
             //Console.WriteLine($"Push已接收:{arg1} 长度:{arg2.Length}");
             server.Send(arg1, arg2, 0, arg2.Length);

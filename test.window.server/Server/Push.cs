@@ -4,6 +4,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace test.window.server.Server
             server.Start(port);
         }
 
-        private void Server_OnAccept(int obj)
+        private void Server_OnAccept(Socket socket, int obj)
         {
             //server.SetAttached(obj, 555);
             //Console.WriteLine($"Push已连接{obj}");

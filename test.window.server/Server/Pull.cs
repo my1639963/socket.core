@@ -3,6 +3,7 @@ using socket.core.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace test.window.server.Server
             server.Start(port);
         }
 
-        private void Server_OnAccept(int obj)
+        private void Server_OnAccept(Socket socket, int obj)
         {
             //server.SetAttached(obj, 555);
             //Console.WriteLine($"Pull已连接{obj}");
@@ -37,13 +38,13 @@ namespace test.window.server.Server
         private void Server_OnSend(int arg1, int arg2)
         {
             //Console.WriteLine($"Pull已发送:{arg1} 长度:{arg2}");
-        }        
+        }
 
         private void Server_OnReceive(int arg1, int arg2)
         {
             //int aaa = server.GetAttached<int>(arg1);
             //Console.WriteLine($"Pull已接收:{arg1} 长度:{arg2}");
-            byte[] data = server.Fetch(arg1, server.GetLength(arg1));            
+            byte[] data = server.Fetch(arg1, server.GetLength(arg1));
             server.Send(arg1, data, 0, data.Length);
         }
 
@@ -52,6 +53,6 @@ namespace test.window.server.Server
             //int aaa = server.GetAttached<int>(obj);
             //Console.WriteLine($"Pull断开{obj}");
         }
-        
+
     }
 }

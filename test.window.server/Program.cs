@@ -1,7 +1,10 @@
-﻿using System;
+﻿using socket.core.Server;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,12 +23,16 @@ namespace test.window.server
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            int port = int.Parse(ConfigurationSettings.AppSettings["port"]);
-            int numConnections = int.Parse(ConfigurationSettings.AppSettings["numConnections"]);
-            int receiveBufferSize = int.Parse(ConfigurationSettings.AppSettings["receiveBufferSize"]);
-            int overtime = int.Parse(ConfigurationSettings.AppSettings["overtime"]);
+            int port = 6022;
+            int numConnections = 100;
+            int receiveBufferSize = 4096;
+            int overtime = 20;
 
-            Push push = new Push(numConnections, receiveBufferSize, overtime, port);
+            var server = new TcpPushServer(numConnections, receiveBufferSize, overtime);
+            server.OnAccept += Server_OnAccept;
+            server.OnReceive += Server_OnReceive;
+            server.Start(port);
+
             //Pull pull = new Pull(numConnections, receiveBufferSize, overtime, port);
             //Pack pack = new Pack(numConnections, receiveBufferSize, overtime, port, 0xff);
 
@@ -50,6 +57,16 @@ namespace test.window.server
 
             Console.WriteLine("服务端已准备好!");
             Console.Read();
+        }
+
+        private static void Server_OnReceive(int arg1, byte[] arg2)
+        {
+            Console.WriteLine(Encoding.UTF8.GetString(arg2));
+        }
+
+        private static void Server_OnAccept(Socket socket, int obj)
+        {
+            Console.WriteLine($"{(socket.RemoteEndPoint as IPEndPoint).Address},ID{obj}");
         }
     }
 }

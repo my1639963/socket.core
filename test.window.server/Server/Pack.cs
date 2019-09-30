@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace test.window.server.Server
         /// <param name="overtime">超时时长,单位秒.(每10秒检查一次)，当值为0时，不设置超时</param>
         /// <param name="port">端口</param>
         /// <param name="headerFlag">包头</param>
-        public Pack(int numConnections, int receiveBufferSize, int overtime,int port,uint headerFlag)
+        public Pack(int numConnections, int receiveBufferSize, int overtime, int port, uint headerFlag)
         {
             server = new TcpPackServer(numConnections, receiveBufferSize, overtime, headerFlag);
             server.OnAccept += Server_OnAccept;
@@ -28,7 +29,7 @@ namespace test.window.server.Server
             server.Start(port);
         }
 
-        private void Server_OnAccept(int obj)
+        private void Server_OnAccept(Socket socket, int obj)
         {
             //server.SetAttached(obj, 555);
             //Console.WriteLine($"Pack已连接{obj}");
@@ -43,7 +44,7 @@ namespace test.window.server.Server
         {
             //int aaa = server.GetAttached<int>(arg1);
             //Console.WriteLine($"Pack已接收:{arg1} 长度:{arg2.Length}");          
-            server.Send(arg1, arg2, 0, arg2.Length);           
+            server.Send(arg1, arg2, 0, arg2.Length);
         }
 
         private void Server_OnClose(int obj)
